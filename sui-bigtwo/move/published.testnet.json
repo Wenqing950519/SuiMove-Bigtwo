@@ -1,0 +1,14 @@
+{
+    "publishedObjectDigest":  "c1pAcu43tYRhyw1uWCo7BTrJ8ebpiwvth9RGvPCQMEe",
+    "publishDigest":  "J6HWyu8trVtFcqE8biD5zCaW3PPYznaVc7gsrwdvm6fX",
+    "packageId":  "0x94b3f4d9451736b6af3679228852d1749dbb6949dded8da8dbb0cade7682f985",
+    "previousPackageId":  "0x9f384d9b64ddd09efe11a2d76c37bd18f8dc71852f09661074797a54b92e3f85",
+    "previousPublishDigest":  "JD34zR3Vtirk5d2vk8Fg1qTwbQG6nnDmbWkhfUE7tH4i",
+    "publishedAt":  "2026-06-12T08:21:09+08:00",
+    "upgradeCapId":  "0xc3c4e97be0907d5c9976a53f9e6d5f7b3ecbacbe2cb1a95d9c804e0193e928c8",
+    "module":  "big_two",
+    "publisher":  "0x07be06cf3e6e4c32ca2fc26c8e814dcb2a7ab65705605f3f562259e8cff89a25",
+    "network":  "testnet",
+    "stakeLabel":  "0.1 testnet SUI",
+    "stakeMist":  100000000
+}

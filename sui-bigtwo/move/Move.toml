@@ -1,0 +1,6 @@
+[package]
+name = "sui_bigtwo"
+edition = "2024.beta"
+
+[addresses]
+big_two = "0x0"
