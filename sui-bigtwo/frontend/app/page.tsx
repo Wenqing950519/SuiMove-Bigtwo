@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Spade } from "lucide-react"
+import Link from "next/link"
+import { BookOpen, Spade } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { GameTable } from "@/components/game-table"
@@ -19,6 +20,7 @@ const COPY = {
   noRoom: "尚未建立房間",
   verify: "驗證",
   history: "歷史",
+  docs: "中文文件",
 } as const
 
 export default function Page() {
@@ -41,9 +43,18 @@ export default function Page() {
               </span>
             </div>
           </div>
-          <Badge variant="outline" className="font-mono text-[11px]">
-            {game.seed !== null ? `${COPY.seed} 0x${game.seed.toString(16)}` : COPY.noRoom}
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/docs"
+              className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border px-2.5 text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+            >
+              <BookOpen className="size-3.5" />
+              {COPY.docs}
+            </Link>
+            <Badge variant="outline" className="font-mono text-[11px]">
+              {game.seed !== null ? `${COPY.seed} 0x${game.seed.toString(16)}` : COPY.noRoom}
+            </Badge>
+          </div>
         </div>
       </header>
 
