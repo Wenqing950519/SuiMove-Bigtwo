@@ -41,9 +41,13 @@ jobs:
         run: npm run build
         env:
           GITHUB_PAGES: "true"
+          GITHUB_PAGES_CUSTOM_DOMAIN: "true"
 
       - name: Disable Jekyll
         run: touch out/.nojekyll
+
+      - name: Add custom domain
+        run: echo "bigtwo.tungowo.com" > out/CNAME
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

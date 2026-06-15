@@ -1,0 +1,6 @@
+# Local presentation exports
+/SuiBigTwo_*.pptx
+/sui-bigtwo/presentation/
+
+# PowerPoint temporary lock files
+**/~$*.pptx
