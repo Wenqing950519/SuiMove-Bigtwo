@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { BookOpen, Spade } from "lucide-react"
+import { BookOpen, Spade, Users } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { GameTable } from "@/components/game-table"
@@ -21,6 +21,7 @@ const COPY = {
   verify: "驗證",
   history: "歷史",
   docs: "中文文件",
+  v2: "多人 V2",
 } as const
 
 export default function Page() {
@@ -44,6 +45,13 @@ export default function Page() {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <Link
+              href="/v2"
+              className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border px-2.5 text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+            >
+              <Users className="size-3.5" />
+              {COPY.v2}
+            </Link>
             <Link
               href="/docs"
               className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border px-2.5 text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground"

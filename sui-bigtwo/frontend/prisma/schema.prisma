@@ -1,0 +1,105 @@
+// Sui Big Two V2 — data model (Phase 2)
+// 對應 V2_PROJECT_ROADMAP.md 第 5 節資料表草案。
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RoomStatus {
+  WAITING // 等待玩家
+  STARTING // 即將開始
+  PLAYING // 遊戲中
+  FINISHED // 已結束
+}
+
+model User {
+  id            String   @id @default(cuid())
+  walletAddress String   @unique
+  nickname      String?
+  isAdmin       Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  createdRooms Room[]       @relation("RoomCreator")
+  roomPlayers  RoomPlayer[]
+}
+
+model Room {
+  id          String     @id @default(cuid())
+  code        String     @unique // 四位英文字母，例如 KQAZ
+  status      RoomStatus @default(WAITING)
+  stakeAmount BigInt     @default(1000000000) // 1 SUI = 1e9 MIST
+  chainRoomId String? // 鏈上 GameRoom object id
+  createdById String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  createdBy     User?                  @relation("RoomCreator", fields: [createdById], references: [id])
+  players       RoomPlayer[]
+  gameState     GameState?
+  events        GameEvent[]
+  verifications VerificationSnapshot[]
+
+  @@index([status])
+}
+
+model RoomPlayer {
+  id            String   @id @default(cuid())
+  roomId        String
+  userId        String
+  seatIndex     Int // 0..3
+  walletAddress String
+  stakeTxDigest String?
+  joinedAt      DateTime @default(now())
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([roomId, seatIndex])
+  @@unique([roomId, userId])
+}
+
+model GameState {
+  id              String   @id @default(cuid())
+  roomId          String   @unique
+  currentTurn     Int?
+  lastPlay        Json?
+  handsCommitment Json?
+  remainingCounts Json?
+  status          String?
+  updatedAt       DateTime @updatedAt
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+}
+
+model GameEvent {
+  id            String   @id @default(cuid())
+  roomId        String
+  eventIndex    Int
+  kind          String
+  playerSeat    Int?
+  payload       Json?
+  chainTxDigest String?
+  createdAt     DateTime @default(now())
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([roomId, eventIndex])
+}
+
+model VerificationSnapshot {
+  id               String   @id @default(cuid())
+  roomId           String
+  deckCommitment   String?
+  revealedDeckHash String?
+  replayStatus     String?
+  errors           Json?
+  createdAt        DateTime @default(now())
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+}

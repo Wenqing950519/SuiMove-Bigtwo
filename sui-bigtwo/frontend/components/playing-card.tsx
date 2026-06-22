@@ -17,10 +17,41 @@ interface PlayingCardProps {
 }
 
 const SIZES = {
-  sm: "h-12 w-9 text-[10px]",
-  md: "h-16 w-12 text-xs",
-  lg: "h-24 w-16 text-sm",
+  sm: "h-14 w-10 rounded-lg p-1.5",
+  md: "h-20 w-14 rounded-xl p-2",
+  lg: "h-28 w-20 rounded-2xl p-2.5",
 } as const
+
+const CORNER_SIZES = {
+  sm: "text-[10px]",
+  md: "text-xs",
+  lg: "text-sm",
+} as const
+
+const CENTER_SIZES = {
+  sm: "text-xl",
+  md: "text-3xl",
+  lg: "text-[2.6rem]",
+} as const
+
+const INK = "#2E3D40"
+const RED = "#C8434C"
+
+const CARD_BASE =
+  "relative flex flex-col justify-between bg-white font-semibold border border-[#E7E2D7] shadow-[0_6px_16px_rgba(46,61,64,0.10)] transition-transform duration-150"
+
+const BACK_SIZES = {
+  xs: "h-11 w-8 rounded-md",
+  sm: "h-14 w-10 rounded-lg",
+  md: "h-20 w-14 rounded-xl",
+  lg: "h-28 w-20 rounded-2xl",
+} as const
+
+const BACK_BASE =
+  "relative overflow-hidden bg-[#2E7E6E] border border-[#1f5e52] ring-1 ring-white/40 shadow-[0_4px_10px_rgba(33,108,94,0.20)]"
+const BACK_BORDER = "before:absolute before:inset-[3px] before:rounded-[inherit] before:border before:border-white/30"
+const BACK_PATTERN =
+  "after:absolute after:inset-0 after:bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.14)_0,rgba(255,255,255,0.14)_1.5px,transparent_1.5px,transparent_7px)]"
 
 export function PlayingCard({
   card,
@@ -31,8 +62,8 @@ export function PlayingCard({
 }: PlayingCardProps) {
   const red = SUIT_IS_RED[card.suit]
   const Tag = selectable ? "button" : "div"
-  const corner = `${SUIT_SYMBOL[card.suit]}${card.rank}`
-  const suitColor = red ? "#dc2626" : "#171717"
+  const suitColor = red ? RED : INK
+  const symbol = SUIT_SYMBOL[card.suit]
 
   return (
     <Tag
@@ -43,32 +74,35 @@ export function PlayingCard({
       title={`${SUIT_LABEL[card.suit]} ${card.rank}`}
       style={{ color: suitColor }}
       className={cn(
-        "relative flex flex-col items-center justify-between rounded-md border bg-[oklch(0.99_0.01_85)] p-1 font-mono shadow-sm transition-transform",
+        CARD_BASE,
         SIZES[size],
-        selectable && "cursor-pointer hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-        raised && "-translate-y-4 border-amber-400 ring-2 ring-amber-400",
+        selectable &&
+          "cursor-pointer hover:-translate-y-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FA98E]/50",
+        raised && "-translate-y-5 ring-2 ring-[#2FA98E] ring-offset-1 ring-offset-white",
       )}
     >
-      <span className="self-start whitespace-nowrap font-semibold leading-none">
-        {corner}
+      <span className={cn("flex flex-col items-start leading-none", CORNER_SIZES[size])}>
+        <span className="font-bold tracking-tight">{card.rank}</span>
+        <span className="leading-none">{symbol}</span>
       </span>
-      <span className="text-xl leading-none">{SUIT_SYMBOL[card.suit]}</span>
-      <span className="self-end rotate-180 whitespace-nowrap font-semibold leading-none">
-        {corner}
+
+      <span className={cn("absolute inset-0 flex items-center justify-center leading-none", CENTER_SIZES[size])}>
+        {symbol}
+      </span>
+
+      <span className={cn("flex rotate-180 flex-col items-start self-end leading-none", CORNER_SIZES[size])}>
+        <span className="font-bold tracking-tight">{card.rank}</span>
+        <span className="leading-none">{symbol}</span>
       </span>
     </Tag>
   )
 }
 
-export function CardBack({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
+export function CardBack({ size = "md" }: { size?: "xs" | "sm" | "md" | "lg" }) {
   return (
     <div
       aria-hidden="true"
-      className={cn(
-        "rounded-md border border-emerald-900 bg-emerald-800 shadow-sm",
-        "bg-[repeating-linear-gradient(45deg,oklch(0.4_0.08_160),oklch(0.4_0.08_160)_4px,oklch(0.45_0.08_160)_4px,oklch(0.45_0.08_160)_8px)]",
-        SIZES[size],
-      )}
+      className={cn(BACK_BASE, BACK_BORDER, BACK_PATTERN, BACK_SIZES[size])}
     />
   )
 }

@@ -4,3 +4,9 @@
 
 # PowerPoint temporary lock files
 **/~$*.pptx
+
+# Local app secrets and build artifacts
+**/.env
+**/.env.local
+**/.env.*.local
+**/tsconfig.tsbuildinfo

@@ -8,7 +8,8 @@ const basePath = isGithubPages && !customDomain ? "/SuiMove-Bigtwo" : undefined
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  // 只有打包 GitHub Pages 靜態站時才用 export；一般開發/伺服器部署需保留 API 路由
+  output: isGithubPages ? "export" : undefined,
   trailingSlash: true,
   basePath,
   turbopack: {
