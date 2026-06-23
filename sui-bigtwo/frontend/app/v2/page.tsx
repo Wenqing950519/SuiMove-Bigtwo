@@ -354,7 +354,7 @@ export default function V2MvpPage() {
                 簽署登入
               </Button>
             )}
-            <Link href="/docs" className="text-sm font-medium text-[#667273] underline-offset-4 hover:underline">
+            <Link href="/v2/docs" className="text-sm font-medium text-[#667273] underline-offset-4 hover:underline">
               查看原始文件
             </Link>
           </div>

@@ -186,7 +186,7 @@ export function useV2Game(roomCode: string, active: boolean) {
     return () => clearTimeout(timer)
   }, [active, state.currentTurn, state.gameOver, state.hands, state.lastPlay, state.firstTurn])
 
-  const myHand = state.hands[HUMAN] ?? []
+  const myHand = useMemo(() => state.hands[HUMAN] ?? [], [state.hands])
   const isMyTurn = state.currentTurn === HUMAN && !state.gameOver
 
   const toggleSelect = useCallback(

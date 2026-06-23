@@ -2,7 +2,6 @@ import {
   type Card,
   THREE_CLUBS,
   analyzePlay,
-  cardStrength,
   containsThreeClubs,
   isValidPlay,
   rankIndex,

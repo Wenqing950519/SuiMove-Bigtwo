@@ -10,7 +10,7 @@ const basePath = isGithubPages && !customDomain ? "/SuiMove-Bigtwo" : undefined
 const nextConfig = {
   // 只有打包 GitHub Pages 靜態站時才用 export；一般開發/伺服器部署需保留 API 路由
   output: isGithubPages ? "export" : undefined,
-  trailingSlash: true,
+  trailingSlash: isGithubPages ? true : false,
   basePath,
   turbopack: {
     root: __dirname,

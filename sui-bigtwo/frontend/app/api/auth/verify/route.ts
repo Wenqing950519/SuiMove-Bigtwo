@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { fail, ok } from "@/lib/api"
+import { fail } from "@/lib/api"
 import { SESSION_COOKIE_NAME, SESSION_MAX_AGE, loginMessage, makeSessionToken, verifyNonceToken } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { verifyPersonalMessageSignature } from "@mysten/sui/verify"
